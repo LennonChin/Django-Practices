@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users'
+    'users',
+    'courses',
+    'organization',
+    'operation'
 ]
 
 # override the setting method of UserModel
