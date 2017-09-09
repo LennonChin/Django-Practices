@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'users',
     'courses',
     'organization',
-    'operation'
+    'operation',
+    'xadmin',
+    'crispy_forms'
 ]
 
 # override the setting method of UserModel
