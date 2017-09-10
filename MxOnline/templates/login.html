@@ -80,7 +80,7 @@
                     <div class="error btns login-form-tips" id="jsLoginTips">{% for key,error in login_form.errors.items %}{{ error }}{% endfor %}{{ msg }}</div>
                      <div class="auto-box marb38">
 
-                        <a class="fr" href="forgetpwd.html">忘记密码？</a>
+                        <a class="fr" href="{% url 'user_forget_password' %}">忘记密码？</a>
                      </div>
                      <input class="btn btn-green" id="jsLoginBtn" type="submit" value="立即登录 > " />
                 </form>

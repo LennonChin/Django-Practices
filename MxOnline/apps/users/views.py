@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
 
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, ForgetForm, ModifyForm
 from utils.email_send import send_register_email
 
 from .models import UserProfile, EmailVerifyRecord
@@ -86,5 +86,48 @@ class ActiveUserView(View):
         else:
             return render(request, 'active_fail.html')
         return render(request, 'login.html')
+
+
+class ForgetPasswordView(View):
+    def get(self, request):
+        forget_form = ForgetForm()
+        return render(request, 'forgetpwd.html', {'forget_form': forget_form})
+
+    def post(self, request):
+        forget_form = ForgetForm(request.POST)
+        if forget_form.is_valid():
+            email = request.POST.get('email', '')
+            send_register_email(email, "forget")
+            return render(request, 'send_success.html')
+
+
+class ResetView(View):
+    def get(self, request, reset_code):
+        all_records = EmailVerifyRecord.objects.filter(code=reset_code)
+        if all_records:
+            for record in all_records:
+                email = record.email
+                return render(request, 'password_reset.html', {'email': email})
+        else:
+            return render(request, 'active_fail.html')
+        return render(request, 'login.html')
+
+
+class ModifyPasswordView(View):
+    def post(self, request):
+        modify_form = ModifyForm(request.POST)
+        if modify_form.is_valid():
+            email = request.POST.get("email", "")
+            password = request.POST.get("password", "")
+            password2 = request.POST.get("password2", "")
+            if password != password2:
+                return render(request, 'password_reset.html', {'email': email, 'msg': u"密码不一致"})
+
+            user = UserProfile.objects.get(email=email)
+            user.password = make_password(password)
+            user.save()
+            return render(request, 'login.html')
+        else:
+            return render(request, 'password_reset.html', {"modify_form": modify_form})
 
 
