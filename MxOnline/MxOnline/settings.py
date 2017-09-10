@@ -146,3 +146,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+
+EMAIL_HOST = "smtp.mxhichina.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "admin@coderap.com"
+EMAIL_HOST_PASSWORD = "Cancer0058!"
+EMAIL_USE_TLS = False
+EMAIL_FROM = "admin@coderap.com"
+
