@@ -147,7 +147,7 @@
                             <label>验&nbsp;证&nbsp;码</label>
                             {{ register_form.captcha }}
                         </div>
-                        <div class="error btns" id="jsEmailTips">{% for error in register_form.errors.items %}{{ error }}{% endfor %}{{ msg }}</div>
+                        <div class="error btns" id="jsEmailTips">{% for key,error in register_form.errors.items %}{{ error }}{% endfor %}{{ msg }}</div>
                         <div class="auto-box marb8">
                         </div>
                         <input class="btn btn-green" id="jsEmailRegBtn" type="submit" value="注册并登录" />

@@ -77,7 +77,7 @@
                         <label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>
                         <input name="password" id="password_l" type="password" placeholder="请输入您的密码" />
                     </div>
-                    <div class="error btns login-form-tips" id="jsLoginTips">{% for error in login_form.errors.items %}{{ error }}{% endfor %}{{ msg }}</div>
+                    <div class="error btns login-form-tips" id="jsLoginTips">{% for key,error in login_form.errors.items %}{{ error }}{% endfor %}{{ msg }}</div>
                      <div class="auto-box marb38">
 
                         <a class="fr" href="forgetpwd.html">忘记密码？</a>

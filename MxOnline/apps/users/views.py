@@ -41,9 +41,9 @@ class LoginView(View):
                     login(request, user)
                     return render(request, "index.html")
                 else:
-                    return render(request, 'login.html', {"msg": "请先激活您的账户"})
+                    return render(request, 'login.html', {"msg": u"请先激活您的账户"})
             else:
-                return render(request, 'login.html', {"msg": "用户名或密码错误"})
+                return render(request, 'login.html', {"msg": u"用户名或密码错误"})
         else:
             return render(request, 'login.html', {"login_form": login_form})
 
@@ -57,6 +57,8 @@ class RegisterView(View):
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
             username = request.POST.get("email", "")
+            if UserProfile.objects.filter(email=username):
+                return render(request, 'register.html', {"register_form": register_form, "msg": u"用户已存在"})
             password = request.POST.get("password", "")
             user_profile = UserProfile()
             user_profile.username = username
@@ -81,6 +83,8 @@ class ActiveUserView(View):
                 user = UserProfile.objects.get(email=email)
                 user.is_active = True
                 user.save()
+        else:
+            return render(request, 'active_fail.html')
         return render(request, 'login.html')
 
 
