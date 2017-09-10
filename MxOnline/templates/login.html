@@ -67,7 +67,7 @@
             </div>
             <div class="fl form-box">
                 <h2>帐号登录</h2>
-                <form action="/login/" method="post" autocomplete="off">
+                <form action="{% url 'user_login' %}" method="post" autocomplete="off">
                     {% csrf_token %}
                     <div class="form-group marb20 {% if login_form.errors.username %}errorput{% endif %}">
                         <label>用&nbsp;户&nbsp;名</label>
