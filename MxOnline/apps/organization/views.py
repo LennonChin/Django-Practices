@@ -14,8 +14,27 @@ from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 class OrgView(View):
     def get(self, request):
         all_orgs = CourseOrg.objects.all()
-        org_nums = all_orgs.count()
+        hot_orgs = all_orgs.order_by("-click_nums")[:3]
         all_cities = CityDict.objects.all()
+
+        city_id = request.GET.get('city', '')
+        if city_id:
+            all_orgs = all_orgs.filter(city_id=int(city_id))
+
+        category = request.GET.get('category', '')
+        if category:
+            all_orgs = all_orgs.filter(category=category)
+
+        # sort
+        sort = request.GET.get('sort', '')
+        if sort:
+            if sort == "students":
+                all_orgs = all_orgs.order_by("-students")
+            elif sort == "course":
+                all_orgs = all_orgs.order_by("-course_nums")
+
+        # count
+        org_nums = all_orgs.count()
 
         # pagination for orgs
         try:
@@ -29,6 +48,10 @@ class OrgView(View):
         context = {
             'all_orgs': orgs,
             'org_nums': org_nums,
-            'all_cities': all_cities
+            'all_cities': all_cities,
+            'city_id': city_id,
+            'category': category,
+            'hot_orgs': hot_orgs,
+            "sort": sort
         }
         return render(request, 'org-list.html', context)
