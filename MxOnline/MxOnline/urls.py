@@ -17,6 +17,8 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
+from django.views.static import serve
+from MxOnline.settings import MEDIA_ROOT
 import xadmin
 
 from users.views import LoginView, RegisterView, ActiveUserView, ForgetPasswordView, ResetView, ModifyPasswordView
@@ -35,4 +37,7 @@ urlpatterns = [
 
     # 课程机构首页
     url(r'^org_list/$', OrgView.as_view(), name="org_list"),
+
+    # opera media files
+    url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
 ]

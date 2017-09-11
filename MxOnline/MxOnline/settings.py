@@ -80,6 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.media', # media processor
             ],
         },
     },
@@ -147,10 +148,15 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
+# email setting
 EMAIL_HOST = "smtp.mxhichina.com"
 EMAIL_PORT = 25
 EMAIL_HOST_USER = "admin@coderap.com"
 EMAIL_HOST_PASSWORD = "Cancer0058!"
 EMAIL_USE_TLS = False
 EMAIL_FROM = "admin@coderap.com"
+
+# media setting
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

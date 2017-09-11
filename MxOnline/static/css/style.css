@@ -3330,7 +3330,8 @@ footer .footer .line {
 }
 
 .butler_list_box dt img {
-    width: 100%;
+    height: 100%;
+    width: auto;
     float: left;
     text-align: center;
 }
