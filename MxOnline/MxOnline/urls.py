@@ -1,3 +1,4 @@
+# _*_ encoding: utf-8 _*_
 """MxOnline URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -19,6 +20,7 @@ from django.views.generic import TemplateView
 import xadmin
 
 from users.views import LoginView, RegisterView, ActiveUserView, ForgetPasswordView, ResetView, ModifyPasswordView
+from organization.views import OrgView
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
@@ -30,4 +32,7 @@ urlpatterns = [
     url(r'^forget/$', ForgetPasswordView.as_view(), name="user_forget_password"),
     url(r'^reset/(?P<reset_code>.*)/$', ResetView.as_view(), name="user_reset_password"),
     url(r'^modify_password/$', ModifyPasswordView.as_view(), name="user_modify_password"),
+
+    # 课程机构首页
+    url(r'^org_list/$', OrgView.as_view(), name="org_list"),
 ]
