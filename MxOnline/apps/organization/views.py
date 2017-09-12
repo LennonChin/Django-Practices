@@ -10,6 +10,8 @@ from .forms import UserAskForm
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
+from django.http import HttpResponse
+
 # Create your views here.
 
 
@@ -64,3 +66,6 @@ class AddUserAskView(View):
         userask_form = UserAskForm(request.POST)
         if userask_form.is_valid():
             user_ask = userask_form.save(commit=True)
+            return HttpResponse("{'status': 'success'}", content_type='application/json')
+        else:
+            return HttpResponse("{'status': 'fail', 'msg': 'error'}", content_type='application/json')

@@ -116,6 +116,7 @@
 	<div class="right companyright">
 			<div class="head">我要学习</div>
 			<form class="rightform" id="jsStayForm">
+                {% csrf_token %}
 				<div>
                     <img src="{% static 'images/rightform1.png' %}"/>
                     <input type="text" name="name" id="companyName" placeholder="名字" maxlength="25" />
@@ -129,8 +130,7 @@
                     <input type="text" name="course_name" id="companyAddress" placeholder="课程名" maxlength="50" />
                 </div>
                 <p class="error company-tips" id="jsCompanyTips"></p>
-				<input class="btn" type="text" id="jsStayBtn" value="立即咨询 >" />
-            <input type='hidden' name='csrfmiddlewaretoken' value='5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy' />
+				<input class="btn" type="button" id="jsStayBtn" value="立即咨询 >" />
             </form>
 		</div>
 
@@ -149,4 +149,32 @@
 		</div>
         </div>
 </section>
+{% endblock %}
+
+{% block custom_js %}
+    <script>
+        $('#jsStayBtn').on('click', function() {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "{% url "org:add_ask" %}",
+                data: $('#jsStayForm').serialize(),
+                async: true,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    if (data.status == 'success') {
+
+                        $('#jsStayForm').reset();
+                        alert("提交成功");
+
+                    } else if (data.status == 'fail') {
+                        alert("提交成功");
+
+                        $('#jsCompanyTips').html(data.msg);
+                    }
+                },
+            });
+        });
+    </script>
 {% endblock %}
