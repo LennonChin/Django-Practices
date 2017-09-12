@@ -10,4 +10,5 @@ urlpatterns = [
     # 课程机构首页
     url(r'^list/$', OrgView.as_view(), name="list"),
     url(r'^add_ask/$', AddUserAskView.as_view(), name="add_ask"),
+    url(r'^home/(?P<org_id>\d+)/$', AddUserAskView.as_view(), name="add_ask"),
 ]
