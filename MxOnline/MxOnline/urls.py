@@ -22,7 +22,6 @@ from MxOnline.settings import MEDIA_ROOT
 import xadmin
 
 from users.views import LoginView, RegisterView, ActiveUserView, ForgetPasswordView, ResetView, ModifyPasswordView
-from organization.views import OrgView
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
@@ -35,8 +34,8 @@ urlpatterns = [
     url(r'^reset/(?P<reset_code>.*)/$', ResetView.as_view(), name="user_reset_password"),
     url(r'^modify_password/$', ModifyPasswordView.as_view(), name="user_modify_password"),
 
-    # 课程机构首页
-    url(r'^org_list/$', OrgView.as_view(), name="org_list"),
+    # organization url settings
+    url(r'^org/', include('organization.urls', namespace='org')),
 
     # opera media files
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),

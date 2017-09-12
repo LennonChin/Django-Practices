@@ -6,6 +6,8 @@ from django.views.generic import View
 
 from .models import CourseOrg, CityDict
 
+from .forms import UserAskForm
+
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
@@ -55,3 +57,10 @@ class OrgView(View):
             "sort": sort
         }
         return render(request, 'org-list.html', context)
+
+
+class AddUserAskView(View):
+    def post(self, request):
+        userask_form = UserAskForm(request.POST)
+        if userask_form.is_valid():
+            user_ask = userask_form.save(commit=True)
