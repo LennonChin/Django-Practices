@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+{% load staticfiles %}
 <head>
 	<meta charset="UTF-8">
     <meta name="renderer" content="webkit">
@@ -33,7 +33,7 @@
 
     <div class="middle companyheader">
         <div class="wp">
-            <img class="fl" style="width: 112px;height: 103px" src="{% static 'media/org/2016/11/imooc.png' %}"/>
+            <img class="fl" style="width: 112px;height: 103px" src="{{ MEDIA_URL }}{{ course_org.image }}"/>
             <div class="head fl">
                 <h1>
                     慕课网
@@ -70,10 +70,10 @@
 	<div class="wp list personal_list comp">
 		<div class="left">
 			<ul>
-				<li class="active2"><a href="org-detail-homepage.html">机构首页</a></li>
-                <li class=""><a href="org-detail-course.html">机构课程</a></li>
-                <li class=""><a href="org-detail-desc.html">机构介绍</a></li>
-                <li class=""><a href="org-detail-teachers.html">机构讲师</a></li>
+				<li class="{% ifequal current_page 'home' %}active2{% endifequal %}"><a href="{% url 'org:home' course_org.id %}">机构首页</a></li>
+                <li class="{% ifequal current_page 'course' %}active2{% endifequal %}"><a href="{% url 'org:course' course_org.id %}">机构课程</a></li>
+                <li class="{% ifequal current_page 'desc' %}active2{% endifequal %}"><a href="org-detail-desc.html">机构介绍</a></li>
+                <li class="{% ifequal current_page 'teacher' %}active2{% endifequal %}"><a href="org-detail-teachers.html">机构讲师</a></li>
 			</ul>
 		</div>
 
