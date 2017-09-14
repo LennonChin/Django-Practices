@@ -37,3 +37,14 @@ class CourseListView(View):
             'hot_courses': hot_courses
         }
         return render(request, 'course-list.html', context)
+
+
+class CourseDetailView(View):
+    def get(self, request, course_id):
+        course = Course.objects.get(id=int(course_id))
+        course.click_nums += 1
+        course.save()
+        context = {
+            'course': course
+        }
+        return render(request, 'course-detail.html', context)

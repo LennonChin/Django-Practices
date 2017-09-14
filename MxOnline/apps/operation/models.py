@@ -58,7 +58,7 @@ class UserMessage(models.Model):
 
 
 class UserCourse(models.Model):
-    user = models.IntegerField(default=0, verbose_name=u"接收用户")
+    user = models.ForeignKey(UserProfile, verbose_name=u"接收用户")
     course = models.ForeignKey(Course, verbose_name=u"课程")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
 
