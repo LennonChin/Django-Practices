@@ -8,6 +8,8 @@ from users.models import UserProfile
 
 from operation.models import UserFavorite
 
+from courses.models import CourseResource
+
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
@@ -74,10 +76,12 @@ class CourseDetailView(View):
         return render(request, 'course-detail.html', context)
 
 
-class InfoView(View):
+class CourseInfoView(View):
     def get(self, request, course_id):
         course = Course.objects.get(id=int(course_id))
+        all_resources = CourseResource.objects.filter(course=course)
         context = {
-            'course': course
+            'course': course,
+            'all_resources': all_resources
         }
         return render(request, 'course-video.html', context)
