@@ -18,12 +18,14 @@
 <body>
 <section class="headerwrap headerwrap2">
     <header>
-		<div  class=" header">
- 			<div class="top">
+		<div  class="header2 header">
+
+                <div class="top">
 				<div class="wp">
-					<div class="fl"><p>服务电话：<b>33333333</b></p></div>
-					<!--登录后跳转-->
-                        {% if request.user.is_authenticated %}
+					<div class="fl">
+                        <p>联系方式：<b>3333333333</b></p>
+                    </div>
+                    {% if request.user.is_authenticated %}
                             <div class="personal">
                                 <dl class="user fr">
                                     <dd>bobby<img class="down fr" src="/static/images/top_down.png"/></dd>
@@ -47,50 +49,32 @@
                             <a style="color:white" class="fr registerbtn" href="{% url 'user_register' %}">注册</a> -->
                             <a style="color:white" class="fr loginbtn" href="{% url 'user_login' %}">登录</a>  -->
                         {% endif %}
-
 				</div>
 			</div>
 
-            <div class="middle">
-                <div class="wp">
-                    <a href="index.html"><img class="fl" src="/static/images/logo.jpg"/></a>
-                    <div class="searchbox fr">
-                        <div class="selectContainer fl">
-                            <span class="selectOption" id="jsSelectOption" data-value="course">
-                                公开课
-                            </span>
-                            <ul class="selectMenu" id="jsSelectMenu">
-                                <li data-value="course">公开课</li>
-                                <li data-value="org">课程机构</li>
-                                <li data-value="teacher">授课老师</li>
-                            </ul>
-                        </div>
-                        <input id="search_keywords" class="fl" type="text" value="" placeholder="请输入搜索内容"/>
-                        <img class="search_btn fr" id="jsSearchBtn" src="/static/images/search_btn.png"/>
-                    </div>
-                </div>
+
+    <div class="middle companyheader">
+        <div class="wp">
+            <img class="fl" style="width: 112px;height: 103px" src="{{ MEDIA_URL }}{{ course_org.image }}"/>
+            <div class="head fl">
+                <h1>
+                    慕课网
+                    <img src="{% static 'images/authentication.png' %}"/>
+                    <img src="{% static 'images/gold.png' %}"/>
+                </h1>
+                <p class="fl">
+                    <span class="fl" style="margin-top:8px;color:#848484;">推荐指数： </span>
+                    <span class="precision company-credit" data-star-scope="5.0"></span>
+                    <span class="key">5.0</span>
+                </p>
+            </div>
+            <div class="btn fr collectionbtn  notlogin
+                 "data-favid="22" data-fav-type="1">
+                {% if has_fav %}已经收藏{% else %}收藏{% endif %}
             </div>
 
-
-			<nav>
-				<div class="nav">
-					<div class="wp">
-						<ul>
-							<li class="active" ><a href="index.html">首页</a></li>
-							<li >
-								<a href="course-list.html">
-									公开课<img class="hot" src="/static/images/nav_hot.png">
-								</a>
-							</li>
-							<li >
-								<a href="teachers-list.html">授课教师</a>
-							</li>
-							<li ><a href="org-list.html">授课机构</a></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-
+        </div>
+    </div>
 			</div>
     </header>
 </section>

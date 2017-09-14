@@ -39,4 +39,7 @@ urlpatterns = [
 
     # opera media files
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+
+    # course url settings
+    url(r'^course/', include('courses.urls', namespace='org')),
 ]
