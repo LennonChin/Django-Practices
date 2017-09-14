@@ -72,3 +72,12 @@ class CourseDetailView(View):
         tag = course.tag
 
         return render(request, 'course-detail.html', context)
+
+
+class InfoView(View):
+    def get(self, request, course_id):
+        course = Course.objects.get(id=int(course_id))
+        context = {
+            'course': course
+        }
+        return render(request, 'course-video.html', context)
