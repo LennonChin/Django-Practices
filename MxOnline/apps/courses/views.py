@@ -6,7 +6,7 @@ from django.views.generic import View
 
 from django.http import HttpResponse
 
-from .models import Course
+from .models import Course, Video
 
 from users.models import UserProfile
 
@@ -88,7 +88,8 @@ class CourseDetailView(View):
 class CourseInfoView(LoginRequireMixin, View):
     def get(self, request, course_id):
         course = Course.objects.get(id=int(course_id))
-
+        course.students += 1
+        course.save()
         # 查询用是否已经关联了该课程
         user_course = UserCourse.objects.filter(user=request.user, course=course)
         if user_course:
@@ -150,3 +151,36 @@ class AddCommentView(View):
             return HttpResponse(json.dumps("{'status': 'success', 'msg': 'add success'}"), content_type='application/json')
         else:
             return HttpResponse(json.dumps("{'status': 'fail', 'msg': 'add fail'}"), content_type='application/json')
+
+
+class VideoPlayView(View):
+    def get(self, request, course_id):
+        video = Video.objects.get(id=int(course_id))
+        course = video.lesson.course
+        course.students += 1
+        course.save()
+        # 查询用是否已经关联了该课程
+        user_course = UserCourse.objects.filter(user=request.user, course=course)
+        if user_course:
+            user_course = UserCourse(user=request.user, course=course)
+            user_course.save()
+
+        user_courses = UserCourse.objects.filter(course=course)
+
+        # 取出学过该课程所有用户的id
+        user_ids = [user_course.user.id for user_course in user_courses]
+        # 取出所有用户对应的UserCourse对象；django查询in的一种特定的写法
+        all_user_courses = UserCourse.objects.filter(user_id__in=user_ids)
+        # 取出所有的课程id
+        course_ids = [user_course.course_id for user_course in all_user_courses]
+        # 获取学过该课程的用户学过的其他课程
+        relate_courses = Course.objects.filter(id__in=course_ids).order_by("-click_nums")[:5]
+
+        all_resources = CourseResource.objects.filter(course=course)
+        context = {
+            'course': course,
+            'all_resources': all_resources,
+            'relate_courses': relate_courses,
+            'video': video
+        }
+        return render(request, 'course-play.html', context)
