@@ -1,3 +1,5 @@
+# _*_ encoding: utf-8 _*_
+
 from django.shortcuts import render
 
 from django.views.generic import View
@@ -8,11 +10,14 @@ from .models import Course
 
 from users.models import UserProfile
 
-from operation.models import UserFavorite, CourseComments
+from operation.models import UserFavorite, CourseComments, UserCourse
 
 from courses.models import CourseResource
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
+
+
+from utils.mixin_utils import LoginRequireMixin
 
 import json
 
@@ -80,18 +85,38 @@ class CourseDetailView(View):
         return render(request, 'course-detail.html', context)
 
 
-class CourseInfoView(View):
+class CourseInfoView(LoginRequireMixin, View):
     def get(self, request, course_id):
         course = Course.objects.get(id=int(course_id))
+
+        # 查询用是否已经关联了该课程
+        user_course = UserCourse.objects.filter(user=request.user, course=course)
+        if user_course:
+            user_course = UserCourse(user=request.user, course=course)
+            user_course.save()
+
+        user_courses = UserCourse.objects.filter(course=course)
+
+        # 取出学过该课程所有用户的id
+        user_ids = [user_course.user.id for user_course in user_courses]
+        # 取出所有用户对应的UserCourse对象；django查询in的一种特定的写法
+        all_user_courses = UserCourse.objects.filter(user_id__in=user_ids)
+        # 取出所有的课程id
+        course_ids = [user_course.course_id for user_course in all_user_courses]
+        # 获取学过该课程的用户学过的其他课程
+        relate_courses = Course.objects.filter(id__in=course_ids).order_by("-click_nums")[:5]
+
         all_resources = CourseResource.objects.filter(course=course)
         context = {
             'course': course,
-            'all_resources': all_resources
+            'all_resources': all_resources,
+            'relate_courses': relate_courses
+
         }
         return render(request, 'course-video.html', context)
 
 
-class CourseCommentView(View):
+class CourseCommentView(LoginRequireMixin, View):
     def get(self, request, course_id):
         course = Course.objects.get(id=int(course_id))
         all_resources = CourseResource.objects.filter(course=course)
