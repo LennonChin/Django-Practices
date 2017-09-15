@@ -2,15 +2,19 @@ from django.shortcuts import render
 
 from django.views.generic import View
 
+from django.http import HttpResponse
+
 from .models import Course
 
 from users.models import UserProfile
 
-from operation.models import UserFavorite
+from operation.models import UserFavorite, CourseComments
 
 from courses.models import CourseResource
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
+
+import json
 
 # Create your views here.
 
@@ -85,3 +89,39 @@ class CourseInfoView(View):
             'all_resources': all_resources
         }
         return render(request, 'course-video.html', context)
+
+
+class CourseCommentView(View):
+    def get(self, request, course_id):
+        course = Course.objects.get(id=int(course_id))
+        all_resources = CourseResource.objects.filter(course=course)
+        all_comments = CourseComments.objects.all()
+        context = {
+            'course': course,
+            'all_comments': all_resources,
+            'all_comments': all_comments
+        }
+        return render(request, 'course-comment.html', context)
+
+    def post(self, request):
+        pass
+
+
+class AddCommentView(View):
+    def post(self, request):
+        if not request.user.is_authenticated():
+            return HttpResponse(json.dumps("{'status': 'fail', 'msg': 'not login'}"), content_type='application/json')
+
+        course_id = request.POST.get('course_id', 0)
+        comment = request.POST.get('comments', '')
+
+        if course_id > 0 and comment:
+            course_comment = CourseComments()
+            course = Course.objects.get(id=int(course_id))
+            course_comment.course = course
+            course_comment.comments = comment
+            course_comment.user = request.user
+            course_comment.save()
+            return HttpResponse(json.dumps("{'status': 'success', 'msg': 'add success'}"), content_type='application/json')
+        else:
+            return HttpResponse(json.dumps("{'status': 'fail', 'msg': 'add fail'}"), content_type='application/json')
