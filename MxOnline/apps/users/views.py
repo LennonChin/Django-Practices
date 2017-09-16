@@ -12,6 +12,8 @@ from .forms import LoginForm, RegisterForm, ForgetForm, ModifyForm
 from utils.email_send import send_register_email
 
 from .models import UserProfile, EmailVerifyRecord
+
+from utils.mixin_utils import LoginRequireMixin
 # Create your views here.
 
 
@@ -129,5 +131,13 @@ class ModifyPasswordView(View):
             return render(request, 'login.html')
         else:
             return render(request, 'password_reset.html', {"modify_form": modify_form})
+
+
+class UserInfoView(LoginRequireMixin, View):
+    def get(self, request):
+        context = {
+
+        }
+        return render(request, 'usercenter-info.html', context)
 
 

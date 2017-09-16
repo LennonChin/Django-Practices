@@ -45,4 +45,7 @@ urlpatterns = [
 
     # teacher url settings
     url(r'^teacher/', include('organization.urls', namespace='teacher')),
+
+    # user url settings
+    url(r'^user/', include('users.urls', namespace='user')),
 ]
