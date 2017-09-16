@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from django.views.generic import View
 
-from .models import CourseOrg, CityDict
+from .models import CourseOrg, CityDict, Teacher
 
 from .forms import UserAskForm
 
@@ -173,3 +173,35 @@ class AddFavoriteView(View):
                 return HttpResponse(json.dumps("{'status': 'success', 'msg': 'fav success'}"), content_type='application/json')
             else:
                 return HttpResponse(json.dumps("{'status': 'fail', 'msg': 'fav error'}"), content_type='application/json')
+
+
+class TeacherListView(View):
+    def get(self, request):
+        all_teachers = Teacher.objects.all()
+
+        # sort
+        sort = request.GET.get('sort', '')
+        if sort:
+            if sort == "hot":
+                all_teachers = all_teachers.order_by("-click_nums")
+
+        sorted_teachers = Teacher.objects.all().order_by("-click_nums")[:3]
+
+        # pagination for orgs
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+
+        paginator = Paginator(all_teachers, 1, request=request)
+        all_teachers = paginator.page(page)
+
+        context = {
+            'all_teachers': all_teachers,
+            'sorted_teachers': sorted_teachers,
+            'sort': sort
+        }
+        return render(request, 'teachers-list.html', context)
+
+    def post(self, request):
+        pass

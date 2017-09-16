@@ -42,4 +42,7 @@ urlpatterns = [
 
     # course url settings
     url(r'^course/', include('courses.urls', namespace='course')),
+
+    # teacher url settings
+    url(r'^teacher/', include('organization.urls', namespace='teacher')),
 ]
