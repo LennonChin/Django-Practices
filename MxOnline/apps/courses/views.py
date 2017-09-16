@@ -16,8 +16,9 @@ from courses.models import CourseResource
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
-
 from utils.mixin_utils import LoginRequireMixin
+
+from django.db.models import Q
 
 import json
 
@@ -28,6 +29,11 @@ class CourseListView(View):
     def get(self, request):
         all_courses = Course.objects.all().order_by("-add_time")
         hot_courses = Course.objects.all().order_by("-click_nums")[:3]
+
+        # 课程搜索
+        search_keywords = request.GET.get('keywords', '')
+        if search_keywords:
+            all_courses = all_courses.filter(Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords) | Q(detail__icontains=search_keywords))
 
         # sort
         sort = request.GET.get('sort', '')

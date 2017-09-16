@@ -15,6 +15,9 @@ from courses.models import Course
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from django.http import HttpResponse
+
+from django.db.models import Q
+
 import json
 
 # Create your views here.
@@ -25,6 +28,12 @@ class OrgView(View):
         all_orgs = CourseOrg.objects.all()
         hot_orgs = all_orgs.order_by("-click_nums")[:3]
         all_cities = CityDict.objects.all()
+
+        # 机构搜索
+        search_keywords = request.GET.get('keywords', '')
+        if search_keywords:
+            all_orgs = all_orgs.filter(
+                Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords))
 
         city_id = request.GET.get('city', '')
         if city_id:
@@ -180,6 +189,14 @@ class AddFavoriteView(View):
 class TeacherListView(View):
     def get(self, request):
         all_teachers = Teacher.objects.all()
+
+        # 课程搜索
+        search_keywords = request.GET.get('keywords', '')
+        if search_keywords:
+            all_teachers = all_teachers.filter(
+                Q(name__icontains=search_keywords) |
+                Q(work_company__icontains=search_keywords) |
+                Q(work_position__icontains=search_keywords))
 
         # sort
         sort = request.GET.get('sort', '')
