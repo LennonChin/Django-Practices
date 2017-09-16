@@ -35,3 +35,8 @@ class UploadImageForm(forms.ModelForm):
         model = UserProfile
         fields = ['image']
 
+
+class UpdateForm(forms.Form):
+    password = forms.CharField(required=True, min_length=6)
+    password2 = forms.CharField(required=True, min_length=6)
+

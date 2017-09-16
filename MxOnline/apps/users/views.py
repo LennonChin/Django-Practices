@@ -9,7 +9,7 @@ from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse
 
-from .forms import LoginForm, RegisterForm, ForgetForm, ModifyForm, UploadImageForm
+from .forms import LoginForm, RegisterForm, ForgetForm, ModifyForm, UploadImageForm, UpdateForm
 from utils.email_send import send_register_email
 
 from .models import UserProfile, EmailVerifyRecord
@@ -156,3 +156,20 @@ class UploadImageView(LoginRequireMixin, View):
                                 content_type='application/json')
 
 
+class UpdatePasswordView(View):
+    def post(self, request):
+        modify_form = UpdateForm(request.POST)
+        if modify_form.is_valid():
+            password = request.POST.get("password", "")
+            password2 = request.POST.get("password2", "")
+            if password != password2:
+                return HttpResponse(json.dumps("{'status': 'fail', 'msg': 'comfirm password fail'}"),
+                                content_type='application/json')
+
+            user = request.user
+            user.password = make_password(password)
+            user.save()
+            return HttpResponse(json.dumps("{'status': 'success', 'msg': 'modify success'}"),
+                                content_type='application/json')
+        else:
+            return HttpResponse(json.dumps(modify_form.errors), content_type='application/json')

@@ -86,11 +86,11 @@ $(function(){
             cache: false,
             type: "POST",
             dataType:'json',
-            url:"/users/update/pwd/",
+            url:"/user/update/password/",
             data:$('#jsResetPwdForm').serialize(),
             async: true,
             success: function(data) {
-                if(data.password1){
+                if(data.password){
                     Dml.fun.showValidateError($("#pwd"), data.password1);
                 }else if(data.password2){
                     Dml.fun.showValidateError($("#repwd"), data.password2);

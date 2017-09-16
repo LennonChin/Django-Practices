@@ -27,31 +27,30 @@
 				<div class="wp">
 					<div class="fl"><p>服务电话：<b>33333333</b></p></div>
 					<!--登录后跳转-->
-
-
-                        <div class="personal">
-                            <dl class="user fr">
-                                <dd>bobby<img class="down fr" src="{% static 'images/top_down.png' %}"/></dd>
-                                <dt><img width="20" height="20" src="{% static 'media/image/2016/12/default_big_14.png' %}"/></dt>
-                            </dl>
-                            <div class="userdetail">
-                            	<dl>
-	                                <dt><img width="80" height="80" src="{% static 'media/image/2016/12/default_big_14.png' %}"/></dt>
-	                                <dd>
-	                                    <h2>django</h2>
-	                                    <p>bobby</p>
-	                                </dd>
+                        {% if request.user.is_authenticated %}
+                            <div class="personal">
+                                <dl class="user fr">
+                                    <dd>{{ request.user.username }}<img class="down fr" src="/static/images/top_down.png"/></dd>
+                                    <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
                                 </dl>
-                                <div class="btn">
-	                                <a class="personcenter fl" href="usercenter-info.html">进入个人中心</a>
-	                                <a class="fr" href="/logout/">退出</a>
+                                <div class="userdetail">
+                            	    <dl>
+	                                    <dt><img width="80" height="80" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
+                                            <dd>
+                                                <h2>{{ request.user.username }}</h2>
+                                                <p>{{ request.user.nick_name }}</p>
+                                            </dd>
+                                        </dl>
+                                    <div class="btn">
+                                        <a class="personcenter fl" href="{% url 'user:info' %}">进入个人中心</a>
+                                        <a class="fr" href="/logout/">退出</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <a href="usercenter-message.html">
-                            <div class="msg-num"><span id="MsgNum">0</span></div>
-                        </a>
-
+                        {% else %}
+                            <a style="color:white" class="fr registerbtn" href="{% url 'user_register' %}">注册</a> -->
+                            <a style="color:white" class="fr loginbtn" href="{% url 'user_login' %}">登录</a>  -->
+                        {% endif %}
 
 				</div>
 			</div>
@@ -204,7 +203,7 @@
             <form id="jsResetPwdForm" autocomplete="off">
                 <div class="box">
                     <span class="word2" >新&nbsp;&nbsp;密&nbsp;&nbsp;码</span>
-                    <input type="password" id="pwd" name="password1" placeholder="6-20位非中文字符"/>
+                    <input type="password" id="pwd" name="password" placeholder="6-20位非中文字符"/>
                 </div>
                 <div class="box">
                     <span class="word2" >确定密码</span>
@@ -214,8 +213,7 @@
                 <div class="button">
                     <input id="jsResetPwdBtn" type="button" value="提交" />
                 </div>
-                <input type='hidden' name='csrfmiddlewaretoken' value='DaP7IUKm9FA9nELA9YUlYYWpyIDdCiIP' />
-            <input type='hidden' name='csrfmiddlewaretoken' value='799Y6iPeEDNSGvrTu3noBrO4MBLv6enY' />
+                {% csrf_token %}
             </form>
         </div>
     </div>
@@ -274,7 +272,7 @@
                 <input type="hidden" name="mobile" id="jsInpResetMobil" />
                 <input id="jsSetNewPwdBtn" type="button" value="提交" />
             </div>
-            <input type='hidden' name='csrfmiddlewaretoken' value='DaP7IUKm9FA9nELA9YUlYYWpyIDdCiIP' />
+            {% csrf_token %}
         </form>
     </div>
     <div class="forgetbox dialogbox">

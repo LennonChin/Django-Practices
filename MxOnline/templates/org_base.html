@@ -22,25 +22,24 @@
 
                 <div class="top">
 				<div class="wp">
-					<div class="fl">
-                        <p>联系方式：<b>3333333333</b></p>
-                    </div>
-                    {% if request.user.is_authenticated %}
+					<div class="fl"><p>服务电话：<b>33333333</b></p></div>
+					<!--登录后跳转-->
+                        {% if request.user.is_authenticated %}
                             <div class="personal">
                                 <dl class="user fr">
-                                    <dd>bobby<img class="down fr" src="/static/images/top_down.png"/></dd>
-                                    <dt><img width="20" height="20" src="../media/image/2016/12/default_big_14.png"/></dt>
+                                    <dd>{{ request.user.username }}<img class="down fr" src="/static/images/top_down.png"/></dd>
+                                    <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
                                 </dl>
                                 <div class="userdetail">
                             	    <dl>
-	                                    <dt><img width="80" height="80" src="../media/image/2016/12/default_big_14.png"/></dt>
+	                                    <dt><img width="80" height="80" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
                                             <dd>
-                                                <h2>django</h2>
-                                                <p>bobby</p>
+                                                <h2>{{ request.user.username }}</h2>
+                                                <p>{{ request.user.nick_name }}</p>
                                             </dd>
                                         </dl>
                                     <div class="btn">
-                                        <a class="personcenter fl" href="usercenter-info.html">进入个人中心</a>
+                                        <a class="personcenter fl" href="{% url 'user:info' %}">进入个人中心</a>
                                         <a class="fr" href="/logout/">退出</a>
                                     </div>
                                 </div>
@@ -49,6 +48,7 @@
                             <a style="color:white" class="fr registerbtn" href="{% url 'user_register' %}">注册</a> -->
                             <a style="color:white" class="fr loginbtn" href="{% url 'user_login' %}">登录</a>  -->
                         {% endif %}
+
 				</div>
 			</div>
 
