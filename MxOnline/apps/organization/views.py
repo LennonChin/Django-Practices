@@ -216,9 +216,19 @@ class TeacherDetailView(View):
 
         sorted_teachers = Teacher.objects.all().order_by("-click_nums")[:3]
 
+        has_teacher_fav = False
+        if UserFavorite.objects.filter(user=request.user, fav_id=teacher.id, fav_type=3):
+            has_teacher_fav = True
+
+        has_org_fav = False
+        if UserFavorite.objects.filter(user=request.user, fav_id=teacher.org.id, fav_type=2):
+            has_org_fav = True
+
         context = {
             'teacher': teacher,
             'all_courses': all_courses,
-            'sorted_teachers': sorted_teachers
+            'sorted_teachers': sorted_teachers,
+            'has_teacher_fav': has_teacher_fav,
+            'has_org_fav': has_org_fav
         }
         return render(request, 'teacher-detail.html', context)
