@@ -23,7 +23,7 @@
 			<div class="inforcon">
 				<div class="left" style="width:242px;">
                     <iframe id='frameFile' name='frameFile' style='display: none;'></iframe>
-                    <form class="clearfix" id="jsAvatarForm" enctype="multipart/form-data" autocomplete="off" method="post" action="/users/image/upload/" target='frameFile'>
+                    <form class="clearfix" id="jsAvatarForm" enctype="multipart/form-data" autocomplete="off" method="post" action="{% url 'user:image_upload' %}" target='frameFile'>
                         <label class="changearea" for="avatarUp">
                             <span id="avatardiv" class="pic">
                                 <img width="100" height="100" class="js-img-show" id="avatarShow" src="{{ MEDIA_URL }}{{ request.user.image }}"/>
@@ -33,7 +33,7 @@
                                 <input type="file" name="image" id="avatarUp" class="js-img-up"/>
                             </span>
                         </label>
-                        <input type='hidden' name='csrfmiddlewaretoken' value='799Y6iPeEDNSGvrTu3noBrO4MBLv6enY' />
+                        {% csrf_token %}
                     </form>
                     <div style="border-top:1px solid #eaeaea;margin-top:30px;">
                         <a class="button btn-green btn-w100" id="jsUserResetPwd" style="margin:80px auto;width:100px;">修改密码</a>

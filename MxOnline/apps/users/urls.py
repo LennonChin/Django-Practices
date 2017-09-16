@@ -4,9 +4,10 @@ __date__ = '2017/09/16 下午 10:03'
 
 from django.conf.urls import url
 
-from .views import UserInfoView
+from .views import UserInfoView, UploadImageView
 
 urlpatterns = [
 
     url(r'^info/', UserInfoView.as_view(), name='info'),
+    url(r'^image/upload/', UploadImageView.as_view(), name='image_upload'),
 ]

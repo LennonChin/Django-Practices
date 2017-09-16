@@ -7,14 +7,17 @@ from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
+from django.http import HttpResponse
 
-from .forms import LoginForm, RegisterForm, ForgetForm, ModifyForm
+from .forms import LoginForm, RegisterForm, ForgetForm, ModifyForm, UploadImageForm
 from utils.email_send import send_register_email
 
 from .models import UserProfile, EmailVerifyRecord
 
 from utils.mixin_utils import LoginRequireMixin
 # Create your views here.
+
+import json
 
 
 # custom the auth method
@@ -139,5 +142,17 @@ class UserInfoView(LoginRequireMixin, View):
 
         }
         return render(request, 'usercenter-info.html', context)
+
+
+class UploadImageView(LoginRequireMixin, View):
+    def post(self, request):
+        image_form = UploadImageForm(request.POST, request.FILES, instance=request.user)
+        if image_form.is_valid():
+            image_form.save()
+            return HttpResponse(json.dumps("{'status': 'success', 'msg': 'upload success'}"),
+                                content_type='application/json')
+        else:
+            return HttpResponse(json.dumps("{'status': 'fail', 'msg': 'fav fail'}"),
+                                content_type='application/json')
 
 
