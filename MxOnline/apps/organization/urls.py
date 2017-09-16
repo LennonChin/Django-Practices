@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^home/(?P<org_id>\d+)/$', OrgHomeView.as_view(), name="home"),
     url(r'^course/(?P<org_id>\d+)/$', OrgCourseView.as_view(), name="course"),
     url(r'^desc/(?P<org_id>\d+)/$', OrgDescView.as_view(), name="desc"),
-    url(r'^teacher/(?P<org_id>\d+)/$', OrgTeacherView.as_view(), name="teacher"),
+    url(r'^org_teacher/(?P<org_id>\d+)/$', OrgTeacherView.as_view(), name="teacher"),
 
     # favorite org
     url(r'^add_fav/$', AddFavoriteView.as_view(), name="add_fav"),
