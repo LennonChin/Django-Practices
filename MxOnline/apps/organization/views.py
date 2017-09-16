@@ -10,6 +10,8 @@ from .forms import UserAskForm
 
 from operation.models import UserFavorite
 
+from courses.models import Course
+
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from django.http import HttpResponse
@@ -205,3 +207,18 @@ class TeacherListView(View):
 
     def post(self, request):
         pass
+
+
+class TeacherDetailView(View):
+    def get(self, request, teacher_id):
+        teacher = Teacher.objects.get(id=int(teacher_id))
+        all_courses = Course.objects.filter(teacher=teacher)
+
+        sorted_teachers = Teacher.objects.all().order_by("-click_nums")[:3]
+
+        context = {
+            'teacher': teacher,
+            'all_courses': all_courses,
+            'sorted_teachers': sorted_teachers
+        }
+        return render(request, 'teacher-detail.html', context)

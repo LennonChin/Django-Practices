@@ -4,7 +4,7 @@ __date__ = '2017/09/12 下午 10:23'
 
 from django.conf.urls import url, include
 from .views import OrgView, AddUserAskView, OrgHomeView, OrgCourseView, OrgDescView, OrgTeacherView, AddFavoriteView
-from .views import TeacherListView
+from .views import TeacherListView, TeacherDetailView
 
 urlpatterns = [
 
@@ -21,4 +21,5 @@ urlpatterns = [
 
     # teacher相关
     url(r'^teacher/list/$', TeacherListView.as_view(), name="teacher_list"),
+    url(r'^teacher/detail/(?P<teacher_id>\d+)/$', TeacherDetailView.as_view(), name="teacher_detail"),
 ]
