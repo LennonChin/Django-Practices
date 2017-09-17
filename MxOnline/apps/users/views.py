@@ -14,6 +14,8 @@ from utils.email_send import send_register_email
 
 from .models import UserProfile, EmailVerifyRecord
 
+from operation.models import UserCourse
+
 from utils.mixin_utils import LoginRequireMixin
 # Create your views here.
 
@@ -209,3 +211,12 @@ class UpdateEmailView(LoginRequireMixin, View):
                                 content_type='application/json')
         else:
             return HttpResponse(json.dumps("{'email': 'code invalid'}"), content_type='application/json')
+
+
+class MyCourseView(LoginRequireMixin, View):
+    def get(self, request):
+        user_courses = UserCourse.objects.filter(user=request.user)
+        context = {
+            'user_courses': user_courses,
+        }
+        return render(request, 'usercenter-mycourse.html', context)
