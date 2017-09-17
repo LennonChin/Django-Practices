@@ -22,6 +22,11 @@ class UserProfile(AbstractUser):
         verbose_name = "用户信息"
         verbose_name_plural = verbose_name
 
+    def get_unread_nums(self):
+        # 在调用时才导入，可以防止循环导入
+        from operation.models import UserMessage
+        return UserMessage.objects.filter(user=self.id).count()
+
     def __unicode__(self):
         return self.username
 

@@ -44,6 +44,11 @@
                                     </div>
                                 </div>
                             </div>
+                            <a href="{% url 'user:mymessage' %}">
+                                <div class="msg-num">
+                                    <span class="MsgNum">{{ request.user.get_unread_nums }}</span>
+                                </div>
+                            </a>
                         {% else %}
                             <a style="color:white" class="fr registerbtn" href="{% url 'user_register' %}">注册</a> -->
                             <a style="color:white" class="fr loginbtn" href="{% url 'user_login' %}">登录</a>  -->

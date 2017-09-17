@@ -16,9 +16,11 @@ from .models import UserProfile, EmailVerifyRecord
 
 from courses.models import CourseOrg, Teacher, Course
 
-from operation.models import UserCourse, UserFavorite
+from operation.models import UserCourse, UserFavorite, UserMessage
 
 from utils.mixin_utils import LoginRequireMixin
+
+from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 import json
@@ -75,6 +77,12 @@ class RegisterView(View):
             user_profile.password = make_password(password)
             user_profile.is_active = False
             user_profile.save()
+
+            # send register message
+            user_message = UserMessage()
+            user_message.user = user_profile
+            user_message.message = u"欢迎注册"
+            user_message.save()
 
             # send mail
             send_register_email(username, "register")
@@ -267,3 +275,22 @@ class MyFavoriteCourseView(LoginRequireMixin, View):
             'user_fav_courses': user_fav_courses
         }
         return render(request, 'usercenter-fav-course.html', context)
+
+
+class MyMessageView(LoginRequireMixin, View):
+    def get(self, request):
+        all_messages = UserMessage.objects.filter(user=request.user.id)
+
+        # pagination for all_messages
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+
+        paginator = Paginator(all_messages, 3, request=request)
+        all_messages = paginator.page(page)
+
+        context = {
+            'all_messages': all_messages
+        }
+        return render(request, 'usercenter-message.html', context)
