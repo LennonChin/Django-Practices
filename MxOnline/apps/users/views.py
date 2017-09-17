@@ -173,3 +173,30 @@ class UpdatePasswordView(View):
                                 content_type='application/json')
         else:
             return HttpResponse(json.dumps(modify_form.errors), content_type='application/json')
+
+
+class SendEmailCodeView(LoginRequireMixin, View):
+    def get(self, request):
+        email = request.GET.get('email', '')
+        if UserProfile.objects.filter(email=email):
+            return HttpResponse(json.dumps("{'email': 'already exist'}"), content_type='application/json')
+
+        send_register_email(email, "update_email")
+        return HttpResponse(json.dumps("{'status': 'success', 'msg': 'send success'}"), content_type='application/json')
+
+
+class UpdateEmailView(LoginRequireMixin, View):
+    def post(self, request):
+        email = request.POST.get('email', '')
+        code = request.POST.get('code', '')
+
+        existed_records = EmailVerifyRecord.objects.filter(email=email, code=code, send_type="update_email")
+
+        if existed_records:
+            user = request.user
+            user.email = email
+            user.save()
+            return HttpResponse(json.dumps("{'status': 'success', 'msg': 'modify email success'}"),
+                                content_type='application/json')
+        else:
+            return HttpResponse(json.dumps("{'email': 'code invalid'}"), content_type='application/json')
