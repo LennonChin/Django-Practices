@@ -9,7 +9,7 @@ from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse
 
-from .forms import LoginForm, RegisterForm, ForgetForm, ModifyForm, UploadImageForm, UpdateForm
+from .forms import LoginForm, RegisterForm, ForgetForm, ModifyForm, UploadImageForm, UpdateForm, UserInfoForm
 from utils.email_send import send_register_email
 
 from .models import UserProfile, EmailVerifyRecord
@@ -142,6 +142,15 @@ class UserInfoView(LoginRequireMixin, View):
 
         }
         return render(request, 'usercenter-info.html', context)
+
+    def post(self, request):
+        user_info_form = UserInfoForm(request.POST, instance=request.user)
+        if user_info_form.is_valid():
+            user_info_form.save()
+            return HttpResponse(json.dumps("{'status': 'success', 'msg': 'modify info success'}"),
+                                content_type='application/json')
+        else:
+            return HttpResponse(json.dumps(user_info_form.errors), content_type='application/json')
 
 
 class UploadImageView(LoginRequireMixin, View):

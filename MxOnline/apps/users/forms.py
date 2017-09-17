@@ -40,3 +40,9 @@ class UpdateForm(forms.Form):
     password = forms.CharField(required=True, min_length=6)
     password2 = forms.CharField(required=True, min_length=6)
 
+
+class UserInfoForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['nick_name', 'gender', 'birthday', 'address', 'mobile']
+
