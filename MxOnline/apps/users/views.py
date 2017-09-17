@@ -14,7 +14,9 @@ from utils.email_send import send_register_email
 
 from .models import UserProfile, EmailVerifyRecord
 
-from operation.models import UserCourse
+from courses.models import CourseOrg, Teacher, Course
+
+from operation.models import UserCourse, UserFavorite
 
 from utils.mixin_utils import LoginRequireMixin
 # Create your views here.
@@ -220,3 +222,48 @@ class MyCourseView(LoginRequireMixin, View):
             'user_courses': user_courses,
         }
         return render(request, 'usercenter-mycourse.html', context)
+
+
+class MyFavoriteOrgView(LoginRequireMixin, View):
+    def get(self, request):
+        user_fav_orgs = []
+        org_list = UserFavorite.objects.filter(user=request.user, fav_type=2)
+        for fav_org in org_list:
+            org_id = fav_org.fav_id
+            org = CourseOrg.objects.get(id=org_id)
+            user_fav_orgs.append(org)
+
+        context = {
+            'user_fav_orgs': user_fav_orgs
+        }
+        return render(request, 'usercenter-fav-org.html', context)
+
+
+class MyFavoriteTeacherView(LoginRequireMixin, View):
+    def get(self, request):
+        user_fav_teachers = []
+        teacher_list = UserFavorite.objects.filter(user=request.user, fav_type=3)
+        for fav_org in teacher_list:
+            teacher_id = fav_org.fav_id
+            teacher = Teacher.objects.get(id=teacher_id)
+            user_fav_teachers.append(teacher)
+
+        context = {
+            'user_fav_teachers': user_fav_teachers
+        }
+        return render(request, 'usercenter-fav-teacher.html', context)
+
+
+class MyFavoriteCourseView(LoginRequireMixin, View):
+    def get(self, request):
+        user_fav_courses = []
+        course_list = UserFavorite.objects.filter(user=request.user, fav_type=1)
+        for fav_org in course_list:
+            course_id = fav_org.fav_id
+            course = Course.objects.get(id=course_id)
+            user_fav_courses.append(course)
+
+        context = {
+            'user_fav_courses': user_fav_courses
+        }
+        return render(request, 'usercenter-fav-course.html', context)
