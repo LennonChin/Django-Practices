@@ -23,9 +23,11 @@ import xadmin
 
 from users.views import LoginView, RegisterView, ActiveUserView, ForgetPasswordView, ResetView, ModifyPasswordView
 
+from users.views import IndexView
+
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
-    url(r'^$', TemplateView.as_view(template_name="index.html"), name="index"),
+    url(r'^$', IndexView.as_view(), name="index"),
     url(r'^login/$', LoginView.as_view(), name="user_login"),
     url(r'^register/$', RegisterView.as_view(), name="user_register"),
     url(r'^captcha/', include('captcha.urls')),

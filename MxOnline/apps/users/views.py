@@ -12,7 +12,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .forms import LoginForm, RegisterForm, ForgetForm, ModifyForm, UploadImageForm, UpdateForm, UserInfoForm
 from utils.email_send import send_register_email
 
-from .models import UserProfile, EmailVerifyRecord
+from .models import UserProfile, EmailVerifyRecord, Banner
 
 from courses.models import CourseOrg, Teacher, Course
 
@@ -50,7 +50,8 @@ class LoginView(View):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return render(request, "index.html")
+                    from django.core.urlresolvers import reverse
+                    return HttpResponseRedirect(reverse('index'))
                 else:
                     return render(request, 'login.html', {"msg": u"请先激活您的账户"})
             else:
@@ -305,3 +306,21 @@ class LogoutView(LoginRequireMixin, View):
         logout(request)
         from django.core.urlresolvers import reverse
         return HttpResponseRedirect(reverse('index'))
+
+
+class IndexView(View):
+    def get(self, request):
+
+        banners = Banner.objects.all().order_by('index')
+
+        course_banners = Course.objects.filter(is_banner=True)[:3]
+        courses = Course.objects.filter(is_banner=False)[:6]
+        course_orgs = CourseOrg.objects.all()[:15]
+
+        context = {
+            'banners': banners,
+            'course_banners': course_banners,
+            'courses': courses,
+            'course_orgs': course_orgs
+        }
+        return render(request, 'index.html', context)
