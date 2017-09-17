@@ -2,12 +2,12 @@
 
 from django.shortcuts import render
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from .forms import LoginForm, RegisterForm, ForgetForm, ModifyForm, UploadImageForm, UpdateForm, UserInfoForm
 from utils.email_send import send_register_email
@@ -294,3 +294,10 @@ class MyMessageView(LoginRequireMixin, View):
             'all_messages': all_messages
         }
         return render(request, 'usercenter-message.html', context)
+
+
+class LogoutView(LoginRequireMixin, View):
+    def get(self, request):
+        logout(request)
+        from django.core.urlresolvers import reverse
+        return HttpResponseRedirect(reverse('index'))
