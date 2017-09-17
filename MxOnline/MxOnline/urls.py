@@ -18,7 +18,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views.static import serve
-from MxOnline.settings import MEDIA_ROOT
+from MxOnline.settings import MEDIA_ROOT, STATIC_ROOT
 import xadmin
 
 from users.views import LoginView, RegisterView, ActiveUserView, ForgetPasswordView, ResetView, ModifyPasswordView
@@ -41,6 +41,7 @@ urlpatterns = [
 
     # opera media files
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
 
     # course url settings
     url(r'^course/', include('courses.urls', namespace='course')),
@@ -51,3 +52,5 @@ urlpatterns = [
     # user url settings
     url(r'^user/', include('users.urls', namespace='user')),
 ]
+
+handler404 = 'users.views.page_not_found'
