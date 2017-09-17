@@ -42,9 +42,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="">
+                            <a href="{% url 'user:mymessage' %}">
                                 <div class="msg-num">
-                                    <span class="MsgNum">{{ request.user.get_unread_nums }}</span>
+                                    {% if request.user.get_unread_nums > 0 %}<span class="MsgNum">{{ request.user.get_unread_nums }}{% endif %}</span>
                                 </div>
                             </a>
                         {% else %}
@@ -104,7 +104,7 @@
 <section>
     <div class="wp">
         <ul  class="crumbs">
-            <li><a href="index.html">首页</a>></li>
+            <li><a href="{% url 'index' %}">首页</a>></li>
         </ul>
     </div>
 </section>

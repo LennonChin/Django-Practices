@@ -280,6 +280,10 @@ class MyFavoriteCourseView(LoginRequireMixin, View):
 class MyMessageView(LoginRequireMixin, View):
     def get(self, request):
         all_messages = UserMessage.objects.filter(user=request.user.id)
+        for message in all_messages:
+            if not message.has_read:
+                message.has_read = True
+                message.save()
 
         # pagination for all_messages
         try:
