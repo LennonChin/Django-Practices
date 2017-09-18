@@ -334,3 +334,13 @@ def page_not_found(request):
     response = render_to_response('404.html', context)
     response.status_code = 404
     return response
+
+
+def page_error(request):
+    from django.shortcuts import render_to_response
+    context = {
+
+    }
+    response = render_to_response('500.html', context)
+    response.status_code = 500
+    return response
