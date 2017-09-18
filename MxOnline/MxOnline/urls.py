@@ -51,6 +51,9 @@ urlpatterns = [
 
     # user url settings
     url(r'^user/', include('users.urls', namespace='user')),
+
+    # ueditor
+    url(r'^ueditor/', include('DjangoUeditor.urls')),
 ]
 
 handler404 = 'users.views.page_not_found'

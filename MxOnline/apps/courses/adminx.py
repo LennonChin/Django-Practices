@@ -28,7 +28,12 @@ class CourseAdmin(object):
     list_editable = ['degree']
     exclude = ['click_nums']
     inlines = [LessonInline, CourseResourceInline]
+    # 自动刷新
     refresh_times = [3, 5]
+    # ueditor
+    style_fields = {
+        'detail': 'ueditor',
+    }
 
     # 设置多个模块管理一个model
     def queryset(self):
