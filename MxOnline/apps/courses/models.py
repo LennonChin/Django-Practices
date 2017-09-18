@@ -34,6 +34,12 @@ class Course(models.Model):
 
     def get_lesson_count(self):
         return self.lesson_set.all().count()
+    get_lesson_count.short_description = u"章节数"
+
+    def go_to(self):
+        from django.utils.safestring import mark_safe
+        return mark_safe("<a href='https://www.baidu.com' target='_blank'>跳转</a>")
+    go_to.short_description = u"跳转"
 
     def get_learn_students(self):
         return self.usercourse_set.all()[:5]
