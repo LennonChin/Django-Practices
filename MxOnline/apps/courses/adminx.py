@@ -34,6 +34,7 @@ class CourseAdmin(object):
     style_fields = {
         'detail': 'ueditor',
     }
+    import_excel = True
 
     # 设置多个模块管理一个model
     def queryset(self):
@@ -49,6 +50,11 @@ class CourseAdmin(object):
             course_org = obj.course_org
             course_org.course_nums = Course.objects.filter(course_org=course_org).count()
             course_org.save()
+
+    def post(self, request, *args, **kwargs):
+        if 'excel' in request.FILES:
+            pass
+        return super(CourseAdmin, self).post(request, args, kwargs)
 
 
 class BannerCourseAdmin(object):
