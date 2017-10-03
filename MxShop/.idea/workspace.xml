@@ -17,8 +17,8 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MxShop/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1035">
-              <caret line="46" column="18" lean-forward="false" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="18" />
+            <state relative-caret-position="253">
+              <caret line="41" column="29" lean-forward="false" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
               <folding>
                 <element signature="e#310#319#0" expanded="true" />
               </folding>
@@ -29,8 +29,20 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/goods/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1840">
-              <caret line="83" column="93" lean-forward="false" selection-start-line="83" selection-start-column="93" selection-end-line="84" selection-end-column="78" />
+            <state relative-caret-position="207">
+              <caret line="21" column="73" lean-forward="false" selection-start-line="21" selection-start-column="60" selection-end-line="21" selection-end-column="73" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/trade/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="115">
+              <caret line="5" column="4" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="4" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -39,10 +51,10 @@
         </entry>
       </file>
       <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/apps/trade/models.py">
+        <entry file="file://$PROJECT_DIR$/apps/user_operation/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="722">
-              <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+            <state relative-caret-position="253">
+              <caret line="38" column="80" lean-forward="true" selection-start-line="38" selection-start-column="80" selection-end-line="38" selection-end-column="80" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -53,8 +65,8 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/users/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="667">
-              <caret line="32" column="4" lean-forward="false" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="78" />
+            <state relative-caret-position="138">
+              <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -83,9 +95,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/apps/users/models.py" />
+        <option value="$PROJECT_DIR$/apps/trade/models.py" />
         <option value="$PROJECT_DIR$/MxShop/settings.py" />
         <option value="$PROJECT_DIR$/apps/goods/models.py" />
-        <option value="$PROJECT_DIR$/apps/trade/models.py" />
+        <option value="$PROJECT_DIR$/apps/user_operation/models.py" />
       </list>
     </option>
   </component>
@@ -133,6 +146,17 @@
               <item name="MxShop" type="462c0819:PsiDirectoryNode" />
               <item name="apps" type="462c0819:PsiDirectoryNode" />
               <item name="trade" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MxShop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MxShop" type="462c0819:PsiDirectoryNode" />
+              <item name="apps" type="462c0819:PsiDirectoryNode" />
+              <item name="user_operation" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MxShop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MxShop" type="462c0819:PsiDirectoryNode" />
+              <item name="MxShop" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -383,7 +407,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2742857" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5010917" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1970803" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -487,26 +511,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MxShop/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="46" column="18" lean-forward="false" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="18" />
-          <folding>
-            <element signature="e#310#319#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/users/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="32" column="4" lean-forward="false" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="78" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/Envs/VueShop/Lib/site-packages/django/contrib/auth/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="295">
@@ -515,10 +519,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/goods/models.py">
+    <entry file="file://$PROJECT_DIR$/apps/users/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1840">
-          <caret line="83" column="93" lean-forward="false" selection-start-line="83" selection-start-column="93" selection-end-line="84" selection-end-column="78" />
+        <state relative-caret-position="138">
+          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
@@ -527,8 +531,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/trade/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="722">
-          <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+        <state relative-caret-position="115">
+          <caret line="5" column="4" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MxShop/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="41" column="29" lean-forward="false" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
+          <folding>
+            <element signature="e#310#319#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/goods/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="21" column="73" lean-forward="false" selection-start-line="21" selection-start-column="60" selection-end-line="21" selection-end-column="73" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/user_operation/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="38" column="80" lean-forward="true" selection-start-line="38" selection-start-column="80" selection-end-line="38" selection-end-column="80" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
