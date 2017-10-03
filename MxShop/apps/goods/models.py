@@ -36,6 +36,7 @@ class GoodsCategoryBrand(models.Model):
     """
     品牌名
     """
+    category = models.ForeignKey(GoodsCategory, null=True, blank=True, verbose_name="商品类目")
     name = models.CharField(max_length=30, default="", verbose_name="品牌名", help_text="品牌名")
     desc = models.TextField(max_length=200, default="", verbose_name="品牌描述", help_text="品牌描述")
     image = models.ImageField(max_length=200, upload_to="brand/images/")
