@@ -19,8 +19,16 @@ import xadmin
 from MxShop.settings import MEDIA_ROOT
 from django.views.static import serve
 from rest_framework.documentation import include_docs_urls
+from rest_framework.routers import DefaultRouter
+from goods.views import GoodsListView, GoodsListViewset, CategoryViewset
 
-from goods.views import GoodsListView
+router = DefaultRouter()
+router.register(r'goods', GoodsListViewset, base_name="goods")
+router.register(r'category', CategoryViewset, base_name="category")
+
+# good_list = GoodsListViewset.as_view({
+#     'get': 'list',
+# })
 
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
@@ -29,7 +37,9 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     # 商品列表页
-    url(r'goods/$', GoodsListView.as_view(), name="good-list"),
+    # url(r'goods/$', GoodsListView.as_view(), name="good-list"),
+    # url(r'goodsset/$', good_list, name="good-list"),
+    url(r'^', include(router.urls)),
 
     # 文档
     url(r'docs/', include_docs_urls(title="文档")),
