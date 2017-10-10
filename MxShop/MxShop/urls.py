@@ -24,7 +24,7 @@ from goods.views import GoodsListView, GoodsListViewset, CategoryViewset
 
 router = DefaultRouter()
 router.register(r'goods', GoodsListViewset, base_name="goods")
-router.register(r'category', CategoryViewset, base_name="category")
+router.register(r'categorys', CategoryViewset, base_name="category")
 
 # good_list = GoodsListViewset.as_view({
 #     'get': 'list',
