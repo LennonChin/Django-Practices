@@ -43,7 +43,7 @@ class CategoryViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets
     List:
         商品分类列表数据
     """
-    queryset = GoodsCategory.objects.all()
+    queryset = GoodsCategory.objects.filter(category_type=1)
     serializer_class = CategorySerializer
 
 
