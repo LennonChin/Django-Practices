@@ -47,9 +47,23 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         "max_length": "验证码为4位数字",
         "min_length": "验证码为4位数字",
     }
-    code = serializers.CharField(max_length=4, min_length=4, error_messages=code_error_message, help_text="验证码")
+    code = serializers.CharField(max_length=4, min_length=4, error_messages=code_error_message, help_text="验证码",
+                                 label="验证码", write_only=True)
     username = serializers.CharField(required=True, allow_blank=False,
-                                     validators=[UniqueValidator(queryset=User.objects.all(), message="用户已存在")])
+                                     validators=[UniqueValidator(queryset=User.objects.all(), message="用户已存在")],
+                                     label="用户名")
+
+    password = serializers.CharField(
+        style={'input_type': 'password'},
+        label="密码",
+        write_only=True
+    )
+
+    def create(self, validated_data):
+        user = super(UserRegisterSerializer, self).create(validated_data=validated_data)
+        user.set_password(validated_data["password"])
+        user.save()
+        return user
 
     def validate_code(self, code):
 
