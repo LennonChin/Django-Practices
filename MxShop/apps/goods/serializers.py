@@ -2,7 +2,7 @@
 __author__ = 'LennonChin'
 
 from rest_framework import serializers
-from goods.models import Goods, GoodsCategory
+from goods.models import Goods, GoodsCategory, GoodsImage
 
 
 class CategorySerializer3(serializers.ModelSerializer):
@@ -27,8 +27,17 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class GoodsImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = GoodsImage
+        fields = ("image", )
+
+
 class GoodsSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
+    images = GoodsImageSerializer(many=True)
+
     class Meta:
         model = Goods
         fields = "__all__"

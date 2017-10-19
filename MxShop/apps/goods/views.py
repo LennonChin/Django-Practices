@@ -26,7 +26,7 @@ class GoodsListView(generics.ListAPIView):
     pagination_class = GoodsPagination
 
 
-class GoodsListViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
+class GoodsListViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     商品列表页
     """

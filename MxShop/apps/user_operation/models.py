@@ -18,9 +18,11 @@ class UserFav(models.Model):
     class Meta:
         verbose_name = "用户收藏"
         verbose_name_plural = verbose_name
+        # 联合唯一，由数据库完成
+        unique_together = ("user", "goods")
 
     def __str__(self):
-        return self.user.name
+        return self.user.username
 
 
 class UserLeavingMessage(models.Model):
