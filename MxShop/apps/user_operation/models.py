@@ -12,7 +12,7 @@ class UserFav(models.Model):
     用户收藏
     """
     user = models.ForeignKey(User, verbose_name="用户")
-    goods = models.ForeignKey(Goods, verbose_name="商品")
+    goods = models.ForeignKey(Goods, verbose_name="商品", help_text="商品ID")
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
 
     class Meta:
@@ -37,7 +37,7 @@ class UserLeavingMessage(models.Model):
         (5, "求购"),
     )
     user = models.ForeignKey(User, verbose_name="用户")
-    msg_type = models.CharField(max_length=20, default=1, choices=MESSAGE_CHOICES, verbose_name="留言类型",
+    message_type = models.CharField(max_length=20, default=1, choices=MESSAGE_CHOICES, verbose_name="留言类型",
                                 help_text="留言类型：1(留言),2(投诉),3(询问),4(售后),5(求购),")
     subject = models.CharField(max_length=100, default="", verbose_name="主题", help_text="主题")
     message = models.TextField(max_length=500, default="", verbose_name="留言内容", help_text="留言内容")

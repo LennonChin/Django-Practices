@@ -3,10 +3,11 @@ from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.contrib.auth import get_user_model
 from rest_framework.mixins import CreateModelMixin
-from rest_framework import viewsets
-from .serializers import SmsSerializer, UserRegisterSerializer
+from rest_framework import viewsets, mixins
+from .serializers import SmsSerializer, UserRegisterSerializer, UserDetailSerializer
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions, authentication
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from rest_framework_jwt.serializers import jwt_encode_handler, jwt_payload_handler
 
@@ -84,12 +85,31 @@ class SmsCodeViewset(CreateModelMixin, viewsets.GenericViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-class UserViewset(CreateModelMixin, viewsets.GenericViewSet):
+class UserViewset(CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     用户
     """
-    serializer_class = UserRegisterSerializer
     queryset = User.objects.all()
+
+    authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
+
+    # 动态配置Serializer
+    # serializer_class = UserRegisterSerializer
+    def get_serializer_class(self):
+        if self.action == "retrieve":
+            return UserDetailSerializer
+        elif self.action == "create":
+            return UserRegisterSerializer
+        return UserDetailSerializer
+
+    # 动态配置权限
+    # permission_classes = (permissions.IsAuthenticated, )
+    def get_permissions(self):
+        if self.action == "retrieve":
+            return [permissions.IsAuthenticated()]
+        elif self.action == "create":
+            return []
+        return []
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -103,6 +123,10 @@ class UserViewset(CreateModelMixin, viewsets.GenericViewSet):
 
         headers = self.get_success_headers(serializer.data)
         return Response(result_dict, status=status.HTTP_201_CREATED, headers=headers)
+
+    def get_object(self):
+        # mixins中的RetrieveModelMixin和DestroyModelMixin会用到
+        return self.request.user
 
     def perform_create(self, serializer):
         return serializer.save()

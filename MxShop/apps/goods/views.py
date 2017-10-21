@@ -28,7 +28,8 @@ class GoodsListView(generics.ListAPIView):
 
 class GoodsListViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
-    商品列表页
+    List:
+        商品列表页
     """
     queryset = Goods.objects.all()
     serializer_class = GoodsSerializer
@@ -43,8 +44,10 @@ class GoodsListViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewset
 
 class CategoryViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
-    List:
+    list:
         商品分类列表数据
+    retrieve:
+        获取商品分类详情
     """
     queryset = GoodsCategory.objects.filter(category_type=1)
     serializer_class = CategorySerializer
