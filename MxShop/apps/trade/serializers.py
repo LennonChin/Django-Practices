@@ -2,20 +2,20 @@
 __author__ = 'LennonChin'
 __date__ = '2017/10/22 15:10'
 
+import time
+
 from rest_framework import serializers
 from goods.models import Goods
-from .models import ShoppingCart
+from .models import ShoppingCart, OrderInfo, OrderGoods
 from goods.serializers import GoodsSerializer
 
 
 class ShopCartDetailSerializer(serializers.ModelSerializer):
-
     goods = GoodsSerializer(many=False)
 
     class Meta:
         model = ShoppingCart
         fields = "__all__"
-
 
 
 class ShopCartSerializer(serializers.Serializer):
@@ -53,3 +53,47 @@ class ShopCartSerializer(serializers.Serializer):
         instance.nums = validated_data["nums"]
         instance.save()
         return instance
+
+
+class OrderGoodsSerializer(serializers.ModelSerializer):
+    goods = GoodsSerializer(many=False)
+
+    class Meta:
+        model = OrderGoods
+        fields = "__all__"
+
+
+class OrderDetailSerializer(serializers.ModelSerializer):
+    goods = OrderGoodsSerializer(many=True)
+
+    class Meta:
+        model = OrderInfo
+        fields = "__all__"
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+
+    trade_no = serializers.CharField(read_only=True)
+    order_sn = serializers.CharField(read_only=True)
+    pay_status = serializers.CharField(read_only=True)
+    pay_time = serializers.DateTimeField(read_only=True)
+
+    def generate_order_sn(self):
+        # 当前时间 + user.id + 随机数
+        from random import Random
+        random_ins = Random()
+        order_sn = "{time_str}{userid}{random_str}".format(time_str=time.strftime("%Y%m%d%H%M%S"),
+                                                           userid=self.context["request"].user.id,
+                                                           random_str=random_ins.randint(10, 99))
+        return order_sn
+
+    def validate(self, attrs):
+        attrs["order_sn"] = self.generate_order_sn()
+        return attrs
+
+    class Meta:
+        model = OrderInfo
+        fields = "__all__"
