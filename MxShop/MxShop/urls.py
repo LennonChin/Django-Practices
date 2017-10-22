@@ -24,6 +24,7 @@ from rest_framework.authtoken import views
 from goods.views import GoodsListView, GoodsListViewset, CategoryViewset
 from users.views import SmsCodeViewset, UserViewset
 from user_operation.views import UserFavViewset, LeavingMessageViewset, AddressViewset
+from trade.views import ShopCartViewset
 
 from rest_framework_jwt.views import obtain_jwt_token
 
@@ -39,6 +40,8 @@ router.register(r'userfavs', UserFavViewset, base_name="userfavs")
 router.register(r'messages', LeavingMessageViewset, base_name="messages")
 
 router.register(r'address', AddressViewset, base_name="address")
+
+router.register(r'shopcarts', ShopCartViewset, base_name="shopcarts")
 
 
 # good_list = GoodsListViewset.as_view({
