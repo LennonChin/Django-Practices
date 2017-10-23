@@ -24,7 +24,7 @@ from rest_framework.authtoken import views
 from goods.views import GoodsListView, GoodsListViewset, CategoryViewset
 from users.views import SmsCodeViewset, UserViewset
 from user_operation.views import UserFavViewset, LeavingMessageViewset, AddressViewset
-from trade.views import ShopCartViewset, OrderViewset
+from trade.views import ShopCartViewset, OrderViewset, AliPayView
 
 from rest_framework_jwt.views import obtain_jwt_token
 
@@ -51,11 +51,15 @@ router.register(r'orders', OrderViewset, base_name="orders")
 #     'get': 'list',
 # })
 
+from django.views.generic import TemplateView
+
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    url(r'^index/', TemplateView.as_view(template_name="index.html")),
 
     # drf自带认证模式
     url(r'^api-token-auth/', views.obtain_auth_token),
@@ -70,4 +74,7 @@ urlpatterns = [
 
     # 文档
     url(r'docs/', include_docs_urls(title="文档")),
+
+    # 支付宝
+    url(r'alipay/return/', AliPayView.as_view(), name="alipay"),
 ]

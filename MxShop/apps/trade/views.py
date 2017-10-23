@@ -73,3 +73,86 @@ class OrderViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.Crea
 
             shop_cart.delete()
         return order
+
+
+from rest_framework.views import APIView
+from utils.alipay import AliPay
+from MxShop.const import private_key_path, alipay_key_path
+from datetime import datetime
+from rest_framework.response import Response
+
+
+class AliPayView(APIView):
+    def get(self, request):
+        """
+        处理支付宝return_url返回
+        :param request:
+        :return:
+        """
+        processed_dict = {}
+        for key, value in request.GET.items():
+            processed_dict[key] = value
+
+        sign = processed_dict.pop("sign", None)
+        alipay = AliPay(
+            appid="2016080600180695",
+            app_notify_url="http://projectsedus.com/",
+            app_private_key_path=private_key_path,
+            alipay_public_key_path=alipay_key_path,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
+            debug=True,  # 默认False,
+            return_url="http://47.92.87.172:8000/"
+        )
+
+        verify_result = alipay.verify(processed_dict, sign)
+
+        if verify_result is True:
+            order_sn = processed_dict.get("out_trade_no", None)
+            trade_no = processed_dict.get("trade_no", None)
+            trade_status = processed_dict.get("trade_status", None)
+
+            # 更新订单信息
+            existed_orders = OrderInfo.objects.filter(order_sn=order_sn)
+            for existed_order in existed_orders:
+                existed_order.pay_status = trade_status
+                existed_order.trade_no = trade_no
+                existed_order.pay_time = datetime.now()
+                existed_order.save()
+
+        return Response("success")
+
+    def post(self, request):
+        """
+        处理支付宝notify_url返回
+        :param request:
+        :return:
+        """
+        processed_dict = {}
+        for key, value in request.POST.items():
+            processed_dict[key] = value
+
+        sign = processed_dict.pop("sign", None)
+        alipay = AliPay(
+            appid="2016080600180695",
+            app_notify_url="http://projectsedus.com/",
+            app_private_key_path=private_key_path,
+            alipay_public_key_path=alipay_key_path,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
+            debug=True,  # 默认False,
+            return_url="http://47.92.87.172:8000/alipay/return"
+        )
+
+        verify_result = alipay.verify(processed_dict, sign)
+
+        if verify_result is True:
+            order_sn = processed_dict.get("out_trade_no", None)
+            trade_no = processed_dict.get("trade_no", None)
+            trade_status = processed_dict.get("trade_status", None)
+
+            # 更新订单信息
+            existed_orders = OrderInfo.objects.filter(order_sn=order_sn)
+            for existed_order in existed_orders:
+                existed_order.pay_status = trade_status
+                existed_order.trade_no = trade_no
+                existed_order.pay_time = datetime.now()
+                existed_order.save()
+
+        return Response("success")
