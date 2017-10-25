@@ -21,7 +21,7 @@ from django.views.static import serve
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
-from goods.views import GoodsListView, GoodsListViewset, CategoryViewset, BannerViewset
+from goods.views import GoodsListView, GoodsListViewset, CategoryViewset, BannerViewset, IndexCategoryViewset
 from users.views import SmsCodeViewset, UserViewset
 from user_operation.views import UserFavViewset, LeavingMessageViewset, AddressViewset
 from trade.views import ShopCartViewset, OrderViewset, AliPayView
@@ -48,6 +48,9 @@ router.register(r'orders', OrderViewset, base_name="orders")
 
 # 轮播图
 router.register(r'banners', BannerViewset, base_name="banners")
+
+# 首页商品分类显示
+router.register(r'indexgoods', IndexCategoryViewset, base_name="indexgoods")
 
 
 # good_list = GoodsListViewset.as_view({
