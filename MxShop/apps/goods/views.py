@@ -4,7 +4,9 @@ from rest_framework import generics, viewsets, filters
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
 from .models import Goods, GoodsCategory, Banner
 from .filter import GoodsFilter
@@ -28,11 +30,12 @@ class GoodsListView(generics.ListAPIView):
     pagination_class = GoodsPagination
 
 
-class GoodsListViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class GoodsListViewset(CacheResponseMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     List:
         商品列表页
     """
+    throttle_classes = (AnonRateThrottle, UserRateThrottle)
     queryset = Goods.objects.all()
     serializer_class = GoodsSerializer
     pagination_class = GoodsPagination
