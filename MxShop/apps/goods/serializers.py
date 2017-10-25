@@ -2,7 +2,7 @@
 __author__ = 'LennonChin'
 
 from rest_framework import serializers
-from goods.models import Goods, GoodsCategory, GoodsImage
+from goods.models import Goods, GoodsCategory, GoodsImage, Banner
 
 
 class CategorySerializer3(serializers.ModelSerializer):
@@ -58,3 +58,8 @@ class GoodsCategorySerializer(serializers.ModelSerializer):
         model = Goods
         fields = "__all__"
 
+
+class BannerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Banner
+        fields = "__all__"

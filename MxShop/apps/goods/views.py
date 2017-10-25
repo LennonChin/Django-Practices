@@ -5,8 +5,9 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.authentication import TokenAuthentication
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .models import Goods, GoodsCategory
+from .models import Goods, GoodsCategory, Banner
 from .filter import GoodsFilter
+from .serializers import BannerSerializer
 # Create your views here.
 
 
@@ -52,4 +53,11 @@ class CategoryViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets
     queryset = GoodsCategory.objects.filter(category_type=1)
     serializer_class = CategorySerializer
 
+
+class BannerViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
+    """
+    获取轮播图列表
+    """
+    queryset = Banner.objects.all().order_by("-index")
+    serializer_class = BannerSerializer
 
