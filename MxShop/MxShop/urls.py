@@ -63,6 +63,10 @@ urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+
+    # 第三方登录
+    url('', include('social_django.urls', namespace='social')),
+
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     url(r'^index/', TemplateView.as_view(template_name="index.html")),
