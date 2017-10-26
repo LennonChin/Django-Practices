@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
     'social_django',
+    'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
@@ -208,3 +209,11 @@ SOCIAL_AUTH_WEIBO_SECRET = '62c7ec67fea66535d0584f3722caa44b'
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/index/'
 
+import raven
+
+RAVEN_CONFIG = {
+    'dsn': 'https://<key>:<secret>@sentry.io/<project>',
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+}
